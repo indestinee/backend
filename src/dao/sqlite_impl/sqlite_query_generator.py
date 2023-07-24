@@ -27,6 +27,7 @@ class SqliteQueryGenerator:
         cls, clz: dataclasses.dataclass, primary_keys: List[str]
     ) -> List[str]:
         return [
+            # pylint: disable-next=line-too-long
             f"{field.name} {cls._determine_db_type(field)}{' NOT NULL' if primary_keys and field.name in primary_keys else ''}"
             for field in dataclasses.fields(clz)
         ]
@@ -35,11 +36,11 @@ class SqliteQueryGenerator:
     def _determine_db_type(cls, field: dataclasses.Field) -> str:
         if field.name.endswith("_at"):
             return "TIMESTAMP"
-        elif field.type is int:
+        if field.type is int:
             return "INTEGER"
-        elif field.type is float:
+        if field.type is float:
             return "REAL"
-        elif field.type is Any:
+        if field.type is Any:
             return "BLOB"
         return "TEXT"
 
@@ -53,6 +54,7 @@ class SqliteQueryGenerator:
         fields = {field.name: field for field in dataclasses.fields(clz)}
         keys = [field.name for field in dataclasses.fields(clz)]
         return SqliteQuery(
+            # pylint: disable-next=line-too-long
             f"INSERT OR REPLACE INTO {table_name} ({', '.join(keys)}) VALUES ({', '.join('?' * len(keys))})",
             *[
                 [
@@ -64,7 +66,7 @@ class SqliteQueryGenerator:
         )
 
     @classmethod
-    def _determine_value(cls, value: Any, field: dataclasses.Field):
+    def _determine_value(cls, value: Any, field: dataclasses.Field) -> Any:
         if field.type is float and field.name == "updated_at":
             return time.time()
         if value is not None:
@@ -75,6 +77,7 @@ class SqliteQueryGenerator:
             return field.default
         if field.type is float and field.name == "created_at":
             return time.time()
+        return None
 
     @classmethod
     def _serialize(cls, value: Any):

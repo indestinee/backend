@@ -2,7 +2,7 @@ import os
 import shutil
 
 import flask
-from flask import Blueprint, jsonify
+from flask import Blueprint
 
 from src.features.exceptions import CheckedException
 from src.module import ftp_supplier
@@ -41,10 +41,10 @@ def delete():
     if os.path.islink(abs_path):
         os.unlink(abs_path)
         return create_success_response()
-    elif os.path.isfile(abs_path):
+    if os.path.isfile(abs_path):
         os.remove(abs_path)
         return create_success_response()
-    elif os.path.isdir(abs_path):
+    if os.path.isdir(abs_path):
         shutil.rmtree(abs_path)
         return create_success_response()
     return create_failure_response("unknown file type")

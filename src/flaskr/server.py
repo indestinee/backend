@@ -1,5 +1,5 @@
-from flask import Flask, jsonify
-from werkzeug.exceptions import NotFound, HTTPException
+from flask import Flask
+from werkzeug.exceptions import HTTPException
 
 from src.features.exceptions import CheckedException
 from src.features.logging_supplier import get_logger
@@ -17,12 +17,12 @@ def create_app():
         return "Hello, World!"
 
     @app.errorhandler(Exception)
-    def handle_exception(e: Exception):
-        if isinstance(e, CheckedException):
-            return create_failure_response(e.message, e.status_code)
-        elif isinstance(e, HTTPException):
-            return create_failure_response(e.description, e.code)
-        logger.exception(f"server exception {e}")
+    def handle_exception(exception: Exception):
+        if isinstance(exception, CheckedException):
+            return create_failure_response(exception.message, exception.status_code)
+        if isinstance(exception, HTTPException):
+            return create_failure_response(exception.description, exception.code)
+        logger.exception("server exception: %s", exception)
         return create_failure_response("server error", 500)
 
     app.register_blueprint(ftp_blueprint)
