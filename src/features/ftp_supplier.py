@@ -24,7 +24,7 @@ class FtpSupplier:
         return list(map(self.file_stat, fps))
 
     def file_stat(self, file_path: str) -> FileSystemObject:
-        dir_path, abs_path = self.get_abs_path(file_path, check_exists=True)
+        _, abs_path = self.get_abs_path(file_path, check_exists=True)
         return FileSystemObject.from_stat(file_path, abs_path, os.stat(abs_path))
 
     def get_abs_path(

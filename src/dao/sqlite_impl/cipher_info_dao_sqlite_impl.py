@@ -46,6 +46,7 @@ class CipherInfoDaoSqliteImpl(CipherInfoDao):
         if names:
             self._sqlite_client.execute(
                 SqliteQuery(
+                    # pylint: disable-next=line-too-long
                     f"DELETE FROM {self.table_name} WHERE source = ? AND cipher_identifier = ? AND name IN ({', '.join('?' * len(names))})",
                     source,
                     cipher_identifier,
@@ -55,6 +56,7 @@ class CipherInfoDaoSqliteImpl(CipherInfoDao):
         elif names is None:
             self._sqlite_client.execute(
                 SqliteQuery(
+                    # pylint: disable-next=line-too-long
                     f"DELETE FROM {self.table_name} WHERE source = ? AND cipher_identifier = ?",
                     source,
                     cipher_identifier,

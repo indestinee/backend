@@ -47,7 +47,7 @@ class SqliteClient:
 
     def execute(self, *queries: SqliteQuery, dump=True):
         with self._lock:
-            self._logger.debug(f"SQL: {queries}")
+            self._logger.debug("SQL: %s", queries)
             results = [
                 self._cursor.execute(query.sql, query.args).fetchall()
                 for query in queries
@@ -58,7 +58,7 @@ class SqliteClient:
 
     def batch_insert(self, query: SqliteQuery):
         with self._lock:
-            self._logger.debug(f"SQL: {query}")
+            self._logger.debug("SQL: %s", query)
             result = self._cursor.executemany(query.sql, query.args).fetchall()
             self.commit()
             return result

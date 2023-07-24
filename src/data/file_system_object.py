@@ -4,8 +4,8 @@ from enum import Enum
 
 
 class FileType(str, Enum):
-    file = "file"
-    dir = "dir"
+    FILE = "file"
+    DIR = "dir"
 
 
 @dataclasses.dataclass
@@ -22,7 +22,7 @@ class FileSystemObject:
         return FileSystemObject(
             os.path.basename(file_path),
             os.path.dirname(file_path),
-            type=FileType.dir if os.path.isdir(abs_path) else FileType.file,
+            type=FileType.DIR if os.path.isdir(abs_path) else FileType.FILE,
             size=stat.st_size if os.path.isfile(abs_path) else 0,
             created_at=stat.st_ctime,
             updated_at=stat.st_mtime,
