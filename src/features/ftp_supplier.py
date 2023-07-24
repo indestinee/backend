@@ -1,7 +1,7 @@
 import logging
 import os
 import re
-from typing import List
+from typing import List, Tuple
 
 from src.config import FtpConfig
 from src.data.file_system_object import FileSystemObject
@@ -35,7 +35,7 @@ class FtpSupplier:
         check_is_file=False,
         check_exists=False,
         check_not_exists=False,
-    ) -> tuple[str, str]:
+    ) -> Tuple[str, str]:
         path = os.path.normpath(path)
         abs_path = os.path.abspath(os.path.join(FtpConfig.root_path, path))
         if path.startswith("/") or self._invalid_path_pattern.search(path):
