@@ -3,15 +3,15 @@ import os
 import re
 from typing import List
 
-from src.config.ftp_config import FtpConfig
+from src.config import FtpConfig
 from src.data.file_system_object import FileSystemObject
 from src.features.exceptions import CheckedException
 from src.features.logging_supplier import get_logger
 
 
 class FtpSupplier:
-    logger: logging.Logger = get_logger("ftp")
-    invalid_path_pattern = re.compile(r"(^|/)\.\.(/|$)")
+    _logger: logging.Logger = get_logger("ftp")
+    _invalid_path_pattern = re.compile(r"(^|/)\.\.(/|$)")
 
     def __init__(self):
         if not os.path.exists(FtpConfig.root_path):
@@ -38,7 +38,7 @@ class FtpSupplier:
     ) -> tuple[str, str]:
         path = os.path.normpath(path)
         abs_path = os.path.abspath(os.path.join(FtpConfig.root_path, path))
-        if path.startswith("/") or self.invalid_path_pattern.search(path):
+        if path.startswith("/") or self._invalid_path_pattern.search(path):
             raise CheckedException(f"invalid path: {path}")
         if not abs_path.startswith(FtpConfig.root_path):
             raise CheckedException(f"invalid path: {path}")

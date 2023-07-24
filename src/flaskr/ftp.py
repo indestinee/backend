@@ -6,13 +6,16 @@ from flask import Blueprint, jsonify
 
 from src.features.exceptions import CheckedException
 from src.module import ftp_supplier
+from src.utils.flask_utils import create_failure_response, create_success_response
 
 ftp_blueprint = Blueprint("ftp", __name__, url_prefix="/flask/ftp")
 
 
 @ftp_blueprint.route("/list_dir", methods=["GET"])
 def list_dir():
-    return ftp_supplier.list_dir(flask.request.json.get("dir_path", "."))
+    return create_success_response(
+        dirs=ftp_supplier.list_dir(flask.request.json.get("dir_path", "."))
+    )
 
 
 @ftp_blueprint.route("/download", methods=["GET"])
@@ -37,14 +40,14 @@ def delete():
     path, abs_path = ftp_supplier.get_abs_path(path, check_exists=True)
     if os.path.islink(abs_path):
         os.unlink(abs_path)
-        return jsonify({"success": True}), 200
+        return create_success_response()
     elif os.path.isfile(abs_path):
         os.remove(abs_path)
-        return jsonify({"success": True}), 200
+        return create_success_response()
     elif os.path.isdir(abs_path):
         shutil.rmtree(abs_path)
-        return jsonify({"success": True}), 200
-    return jsonify({"success": False, "message": "unknown file type"}), 200
+        return create_success_response()
+    return create_failure_response("unknown file type")
 
 
 @ftp_blueprint.route("/create_folder", methods=["POST"])
@@ -54,7 +57,7 @@ def create_folder():
         raise CheckedException("dir_path is required")
     dir_path, abs_path = ftp_supplier.get_abs_path(dir_path, check_not_exists=True)
     os.makedirs(abs_path)
-    return jsonify({"success": True}), 200
+    return create_success_response()
 
 
 @ftp_blueprint.route("/upload", methods=["POST"])
@@ -72,4 +75,4 @@ def upload():
     if file is None:
         raise CheckedException("file is required")
     file.save(abs_path)
-    return jsonify({"success": True}), 200
+    return create_success_response()

@@ -1,258 +1,383 @@
 {
-   "info": {
-      "_postman_id": "post_man_id",
-      "name": "backend",
-      "description": "backend",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-   },
-   "item": [
-      {
-         "name": "ftp",
-         "item": [
+  "info": {
+    "_postman_id": "post_man_id",
+    "name": "backend",
+    "description": "backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "ftp",
+      "item": [
+        {
+          "name": "list_dir",
+          "event": [
             {
-               "name": "list_dir",
-               "event": [
-                  {
-                     "listen": "test",
-                     "script": {
-                        "exec": [
-                           ""
-                        ],
-                        "type": "text/javascript"
-                     }
-                  }
-               ],
-               "protocolProfileBehavior": {
-                  "disableBodyPruning": true
-               },
-               "request": {
-                  "method": "GET",
-                  "header": [],
-                  "body": {
-                     "mode": "raw",
-                     "raw": "{\n    \"dir_path\": \"\"\n}",
-                     "options": {
-                        "raw": {
-                           "language": "json"
-                        }
-                     }
-                  },
-                  "url": {
-                     "raw": "{{base_url}}/flask/ftp/list_dir",
-                     "host": [
-                        "{{base_url}}"
-                     ],
-                     "path": [
-                        "flask",
-                        "ftp",
-                        "list_dir"
-                     ]
-                  }
-               },
-               "response": []
-            },
-            {
-               "name": "create_folder",
-               "event": [
-                  {
-                     "listen": "test",
-                     "script": {
-                        "exec": [
-                           ""
-                        ],
-                        "type": "text/javascript"
-                     }
-                  }
-               ],
-               "request": {
-                  "method": "POST",
-                  "header": [],
-                  "body": {
-                     "mode": "raw",
-                     "raw": "{\n    \"dir_path\": \"fa/fb/fc\"\n}",
-                     "options": {
-                        "raw": {
-                           "language": "json"
-                        }
-                     }
-                  },
-                  "url": {
-                     "raw": "{{base_url}}//flask/ftp/create_folder",
-                     "host": [
-                        "{{base_url}}"
-                     ],
-                     "path": [
-                        "",
-                        "flask",
-                        "ftp",
-                        "create_folder"
-                     ]
-                  }
-               },
-               "response": []
-            },
-            {
-               "name": "upload",
-               "event": [
-                  {
-                     "listen": "test",
-                     "script": {
-                        "exec": [
-                           ""
-                        ],
-                        "type": "text/javascript"
-                     }
-                  }
-               ],
-               "request": {
-                  "method": "POST",
-                  "header": [],
-                  "body": {
-                     "mode": "formdata",
-                     "formdata": [
-                        {
-                           "key": "file",
-                           "type": "file",
-                           "src": "~/Downloads/a.txt"
-                        },
-                        {
-                           "key": "file_path",
-                           "value": "a.txt",
-                           "type": "text"
-                        },
-                        {
-                           "key": "override",
-                           "value": "true",
-                           "type": "text"
-                        }
-                     ]
-                  },
-                  "url": {
-                     "raw": "{{base_url}}//flask/ftp/upload",
-                     "host": [
-                        "{{base_url}}"
-                     ],
-                     "path": [
-                        "",
-                        "flask",
-                        "ftp",
-                        "upload"
-                     ]
-                  }
-               },
-               "response": []
-            },
-            {
-               "name": "download",
-               "protocolProfileBehavior": {
-                  "disableBodyPruning": true
-               },
-               "request": {
-                  "method": "GET",
-                  "header": [],
-                  "body": {
-                     "mode": "raw",
-                     "raw": "{\n    \"file_path\": \"a.txt\"\n}",
-                     "options": {
-                        "raw": {
-                           "language": "json"
-                        }
-                     }
-                  },
-                  "url": {
-                     "raw": "{{base_url}}//flask/ftp/download",
-                     "host": [
-                        "{{base_url}}"
-                     ],
-                     "path": [
-                        "",
-                        "flask",
-                        "ftp",
-                        "download"
-                     ]
-                  }
-               },
-               "response": []
-            },
-            {
-               "name": "delete",
-               "request": {
-                  "method": "DELETE",
-                  "header": [],
-                  "body": {
-                     "mode": "raw",
-                     "raw": "{\n    \"path\": \"fa\"\n}",
-                     "options": {
-                        "raw": {
-                           "language": "json"
-                        }
-                     }
-                  },
-                  "url": {
-                     "raw": "{{base_url}}//flask/ftp/delete",
-                     "host": [
-                        "{{base_url}}"
-                     ],
-                     "path": [
-                        "",
-                        "flask",
-                        "ftp",
-                        "delete"
-                     ]
-                  }
-               },
-               "response": []
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
             }
-         ],
-         "auth": {
-            "type": "noauth"
-         },
-         "event": [
-            {
-               "listen": "prerequest",
-               "script": {
-                  "type": "text/javascript",
-                  "exec": [
-                     ""
-                  ]
-               }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"dir_path\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            {
-               "listen": "test",
-               "script": {
-                  "type": "text/javascript",
-                  "exec": [
-                     ""
-                  ]
-               }
+            "url": {
+              "raw": "{{base_url}}/flask/ftp/list_dir",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "flask",
+                "ftp",
+                "list_dir"
+              ]
             }
-         ]
-      }
-   ],
-   "event": [
-      {
-         "listen": "prerequest",
-         "script": {
-            "type": "text/javascript",
-            "exec": [
-               ""
-            ]
-         }
+          },
+          "response": []
+        },
+        {
+          "name": "create_folder",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"dir_path\": \"fa/fb/fc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}//flask/ftp/create_folder",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "",
+                "flask",
+                "ftp",
+                "create_folder"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "upload",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "~/Downloads/a.txt"
+                },
+                {
+                  "key": "file_path",
+                  "value": "b.txt",
+                  "type": "text"
+                },
+                {
+                  "key": "override",
+                  "value": "true",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}//flask/ftp/upload",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "",
+                "flask",
+                "ftp",
+                "upload"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "download",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"file_path\": \"b.txt\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}//flask/ftp/download",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "",
+                "flask",
+                "ftp",
+                "download"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"path\": \"fa\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}//flask/ftp/delete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "",
+                "flask",
+                "ftp",
+                "delete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "noauth"
       },
-      {
-         "listen": "test",
-         "script": {
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
             "type": "text/javascript",
             "exec": [
-               ""
+              ""
             ]
-         }
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "cipher_info",
+      "item": [
+        {
+          "name": "get_cipher_info_by_identifier",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"source\": \"test\",\n    \"cipher_identifier\": \"1233\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/flask/cipher_info/get_cipher_info_by_identifier",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "flask",
+                "cipher_info",
+                "get_cipher_info_by_identifier"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "insert_or_replace",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cipher_infos\": [\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello1\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"12334\",\n            \"name\": \"hello2\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/flask/cipher_info/insert_or_replace",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "flask",
+                "cipher_info",
+                "insert_or_replace"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_by_identifier_and_names",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"source\": \"test\",\n    \"cipher_identifier\": \"1233\",\n    \"names\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/flask/cipher_info/delete_by_identifier_and_names",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "flask",
+                "cipher_info",
+                "delete_by_identifier_and_names"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
       }
-   ],
-   "variable": [
-      {
-         "key": "base_url",
-         "value": "http://127.0.0.1:23303/"
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
       }
-   ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:23303/"
+    }
+  ]
 }
