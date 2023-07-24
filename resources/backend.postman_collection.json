@@ -1,0 +1,258 @@
+{
+   "info": {
+      "_postman_id": "post_man_id",
+      "name": "backend",
+      "description": "backend",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+   },
+   "item": [
+      {
+         "name": "ftp",
+         "item": [
+            {
+               "name": "list_dir",
+               "event": [
+                  {
+                     "listen": "test",
+                     "script": {
+                        "exec": [
+                           ""
+                        ],
+                        "type": "text/javascript"
+                     }
+                  }
+               ],
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\n    \"dir_path\": \"\"\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{base_url}}/flask/ftp/list_dir",
+                     "host": [
+                        "{{base_url}}"
+                     ],
+                     "path": [
+                        "flask",
+                        "ftp",
+                        "list_dir"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "create_folder",
+               "event": [
+                  {
+                     "listen": "test",
+                     "script": {
+                        "exec": [
+                           ""
+                        ],
+                        "type": "text/javascript"
+                     }
+                  }
+               ],
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\n    \"dir_path\": \"fa/fb/fc\"\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{base_url}}//flask/ftp/create_folder",
+                     "host": [
+                        "{{base_url}}"
+                     ],
+                     "path": [
+                        "",
+                        "flask",
+                        "ftp",
+                        "create_folder"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "upload",
+               "event": [
+                  {
+                     "listen": "test",
+                     "script": {
+                        "exec": [
+                           ""
+                        ],
+                        "type": "text/javascript"
+                     }
+                  }
+               ],
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "file",
+                           "type": "file",
+                           "src": "~/Downloads/a.txt"
+                        },
+                        {
+                           "key": "file_path",
+                           "value": "a.txt",
+                           "type": "text"
+                        },
+                        {
+                           "key": "override",
+                           "value": "true",
+                           "type": "text"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{base_url}}//flask/ftp/upload",
+                     "host": [
+                        "{{base_url}}"
+                     ],
+                     "path": [
+                        "",
+                        "flask",
+                        "ftp",
+                        "upload"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "download",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\n    \"file_path\": \"a.txt\"\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{base_url}}//flask/ftp/download",
+                     "host": [
+                        "{{base_url}}"
+                     ],
+                     "path": [
+                        "",
+                        "flask",
+                        "ftp",
+                        "download"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "delete",
+               "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\n    \"path\": \"fa\"\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{base_url}}//flask/ftp/delete",
+                     "host": [
+                        "{{base_url}}"
+                     ],
+                     "path": [
+                        "",
+                        "flask",
+                        "ftp",
+                        "delete"
+                     ]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "auth": {
+            "type": "noauth"
+         },
+         "event": [
+            {
+               "listen": "prerequest",
+               "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                     ""
+                  ]
+               }
+            },
+            {
+               "listen": "test",
+               "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                     ""
+                  ]
+               }
+            }
+         ]
+      }
+   ],
+   "event": [
+      {
+         "listen": "prerequest",
+         "script": {
+            "type": "text/javascript",
+            "exec": [
+               ""
+            ]
+         }
+      },
+      {
+         "listen": "test",
+         "script": {
+            "type": "text/javascript",
+            "exec": [
+               ""
+            ]
+         }
+      }
+   ],
+   "variable": [
+      {
+         "key": "base_url",
+         "value": "http://127.0.0.1:23303/"
+      }
+   ]
+}
