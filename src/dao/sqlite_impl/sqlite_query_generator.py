@@ -85,4 +85,6 @@ class SqliteQueryGenerator:
             return value
         if isinstance(value, (list, dict)):
             return json.dumps(value)
+        if dataclasses.is_dataclass(value):
+            return json.dumps(dataclasses.asdict(value))
         return value
