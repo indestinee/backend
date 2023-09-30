@@ -1,18 +1,24 @@
 import abc
 from typing import List
 
-from src.data.cipher_info import CipherInfo
+from src.data.unified_item import UnifiedItem
 
 
-class CipherInfoDao(abc.ABC):
+class UnifiedItemDao(abc.ABC):
     @abc.abstractmethod
     def query_by_identifier(
         self, source: str, cipher_identifier: str
-    ) -> List[CipherInfo]:
+    ) -> List[UnifiedItem]:
         ...
 
     @abc.abstractmethod
-    def insert_or_replace(self, cipher_infos: List[CipherInfo]):
+    def query_by_name(
+        self, source: str, cipher_identifier: str, name: str
+    ) -> List[UnifiedItem]:
+        ...
+
+    @abc.abstractmethod
+    def insert_or_replace(self, items: List[UnifiedItem]):
         ...
 
     @abc.abstractmethod

@@ -1,8 +1,9 @@
 import os
 import shutil
+from urllib.parse import unquote
 
 import flask
-from flask import Blueprint
+from flask import Blueprint, send_file
 
 from src.features.exceptions import CheckedException
 from src.module import ftp_supplier
@@ -14,13 +15,19 @@ ftp_blueprint = Blueprint("ftp", __name__, url_prefix="/flask/ftp")
 @ftp_blueprint.route("/list_dir", methods=["GET"])
 def list_dir():
     return create_success_response(
-        dirs=ftp_supplier.list_dir(flask.request.json.get("dir_path", "."))
+        dirs=ftp_supplier.list_dir(flask.request.args.get("dir_path", "."))
     )
 
 
 @ftp_blueprint.route("/download", methods=["GET"])
 def download():
-    file_path = flask.request.json.get("file_path", ".")
+    file_path = unquote(flask.request.args.get("file_path", "."))
+    password = flask.request.args.get("password", None)
+    if password:
+        result = ftp_supplier.decrypt_file(file_path, password)
+        file_data = result.pop("file_data")
+        return send_file(file_data, **result, as_attachment=True), 200
+
     file_path, abs_path = ftp_supplier.get_abs_path(file_path, check_is_file=True)
     return (
         flask.send_from_directory(

@@ -1,19 +1,25 @@
+import json
 import logging
 import os
 import re
-from typing import List, Tuple
+from io import BytesIO
+from typing import Tuple, List, Dict
 
 from src.config import FtpConfig
+from src.data.cipher import Cipher
 from src.data.file_system_object import FileSystemObject
+from src.features.cipher_supplier import CipherSupplier
 from src.features.exceptions import CheckedException
 from src.features.logging_supplier import get_logger
 
 
 class FtpSupplier:
+    cipher_supplier: CipherSupplier
     _logger: logging.Logger = get_logger("ftp")
     _invalid_path_pattern = re.compile(r"(^|/)\.\.(/|$)")
 
-    def __init__(self):
+    def __init__(self, cipher_supplier: CipherSupplier):
+        self.cipher_supplier = cipher_supplier
         if not os.path.exists(FtpConfig.root_path):
             os.makedirs(FtpConfig.root_path)
         assert os.path.isdir(FtpConfig.root_path)
@@ -51,3 +57,27 @@ class FtpSupplier:
         if check_not_exists and os.path.exists(abs_path):
             raise CheckedException(f"file exists: {path}")
         return path, abs_path
+
+    def decrypt_file(self, file_path: str, password: str) -> Dict:
+        file_path, abs_path = self.get_abs_path(file_path, check_is_file=True)
+        try:
+            with open(abs_path, "rb") as file_stream:
+                cipher = Cipher(**json.load(file_stream))
+            decrypted_data = json.loads(
+                self.cipher_supplier.decrypt(password, cipher.dumps())
+            )
+            is_hex = decrypted_data.pop("is_hex", False)
+            file_data = decrypted_data.pop("file_data", "")
+            byte_io = BytesIO()
+            byte_io.write(
+                bytes.fromhex(file_data) if is_hex else file_data.encode("utf-8")
+            )
+            byte_io.seek(0)
+            return {
+                "file_data": byte_io,
+                **decrypted_data,
+            }
+
+        except Exception as exception:
+            self._logger.debug("decrypt file failed with %s", exception)
+            raise CheckedException("decryption failure")

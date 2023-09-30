@@ -1,14 +1,14 @@
 from typing import List
 
-from src.dao.cipher_info_dao import CipherInfoDao
 from src.dao.sqlite_impl.sqlite_client import SqliteClient, SqliteQuery
 from src.dao.sqlite_impl.sqlite_query_generator import SqliteQueryGenerator
-from src.data.cipher_info import CipherInfo
+from src.dao.unified_item_dao import UnifiedItemDao
+from src.data.unified_item import UnifiedItem
 
 
-class CipherInfoDaoSqliteImpl(CipherInfoDao):
+class UnifiedItemDaoSqliteImpl(UnifiedItemDao):
     _sqlite_client: SqliteClient
-    table_name: str = CipherInfo.__name__
+    table_name: str = UnifiedItem.__name__
 
     def __init__(self, sqlite_client: SqliteClient):
         self._sqlite_client = sqlite_client
@@ -17,26 +17,48 @@ class CipherInfoDaoSqliteImpl(CipherInfoDao):
     def _create_table(self):
         sql = SqliteQueryGenerator.create_sql(
             self.table_name,
-            CipherInfo,
+            UnifiedItem,
             primary_keys=["source", "cipher_identifier", "name"],
         )
         self._sqlite_client.execute(sql)
 
     def query_by_identifier(
-        self, source: str, cipher_identifier: str
-    ) -> List[CipherInfo]:
+        self,
+        source: str,
+        cipher_identifier: str,
+    ) -> List[UnifiedItem]:
         sql = SqliteQuery(
-            f"""SELECT * FROM {self.table_name} WHERE cipher_identifier = ? AND source = ?""",
-            cipher_identifier,
+            # pylint: disable-next=line-too-long
+            f"SELECT * FROM {self.table_name} WHERE source = ? AND cipher_identifier = ?",
             source,
+            cipher_identifier,
         )
         return [
-            CipherInfo(**row) for row in self._sqlite_client.execute(sql, dump=False)[0]
+            UnifiedItem.from_json(**row)
+            for row in self._sqlite_client.execute(sql, dump=False)[0]
         ]
 
-    def insert_or_replace(self, cipher_infos: List[CipherInfo]):
+    def query_by_name(
+        self,
+        source: str,
+        cipher_identifier: str,
+        name: str,
+    ) -> List[UnifiedItem]:
+        sql = SqliteQuery(
+            # pylint: disable-next=line-too-long
+            f"SELECT * FROM {self.table_name} WHERE source = ? AND cipher_identifier = ? AND name = ?",
+            source,
+            cipher_identifier,
+            name,
+        )
+        return [
+            UnifiedItem.from_json(**row)
+            for row in self._sqlite_client.execute(sql, dump=False)[0]
+        ]
+
+    def insert_or_replace(self, items: List[UnifiedItem]):
         sql = SqliteQueryGenerator.create_insert_or_replace(
-            self.table_name, CipherInfo, cipher_infos
+            self.table_name, UnifiedItem, items
         )
         self._sqlite_client.batch_insert(sql)
 

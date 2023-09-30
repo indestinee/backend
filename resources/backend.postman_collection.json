@@ -113,7 +113,7 @@
                 {
                   "key": "file",
                   "type": "file",
-                  "src": "~/Downloads/a.txt"
+                  "src": "/Users/indestinee/Downloads/a.txt"
                 },
                 {
                   "key": "file_path",
@@ -229,7 +229,7 @@
       ]
     },
     {
-      "name": "cipher_info",
+      "name": "unified_item",
       "item": [
         {
           "name": "get_cipher_info_by_identifier",
@@ -260,14 +260,14 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/flask/cipher_info/get_cipher_info_by_identifier",
+              "raw": "{{base_url}}/flask/item/get_by_identifier",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "flask",
-                "cipher_info",
-                "get_cipher_info_by_identifier"
+                "item",
+                "get_by_identifier"
               ]
             }
           },
@@ -291,7 +291,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"cipher_infos\": [\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello1\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"12334\",\n            \"name\": \"hello2\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        }\n    ]\n}",
+              "raw": "{\n    \"items\": [\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"1233\",\n            \"name\": \"hello1\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        },\n        {\n            \"source\": \"test\",\n            \"cipher_identifier\": \"12334\",\n            \"name\": \"hello2\",\n            \"data\": {\n                \"a\": \"a\"\n            },\n            \"note\": \"\"\n        }\n    ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -299,13 +299,13 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/flask/cipher_info/insert_or_replace",
+              "raw": "{{base_url}}/flask/item/insert_or_replace",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "flask",
-                "cipher_info",
+                "item",
                 "insert_or_replace"
               ]
             }
@@ -338,13 +338,13 @@
               }
             },
             "url": {
-              "raw": "{{base_url}}/flask/cipher_info/delete_by_identifier_and_names",
+              "raw": "{{base_url}}/flask/item/delete_by_identifier_and_names",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
                 "flask",
-                "cipher_info",
+                "item",
                 "delete_by_identifier_and_names"
               ]
             }
