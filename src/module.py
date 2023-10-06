@@ -11,7 +11,7 @@ from src.features.logging_supplier import get_logger
 config = ServerConfig()
 sqlite_client = SqliteClient(config.db_path)
 cipher_supplier = CipherSupplier()
-unified_item_dao = UnifiedItemDao(sqlite_client, UnifiedItem)
+unified_item_dao = UnifiedItemDao(sqlite_client)
 unified_item_data_loader = UnifiedItemDataLoader(unified_item_dao, cipher_supplier)
 ftp_supplier = FtpSupplier(cipher_supplier)
 logger = get_logger("werkzeug")
