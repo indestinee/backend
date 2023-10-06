@@ -1,18 +1,19 @@
 import dataclasses
+from typing import List
+
+from sqlite_dao_ext import SqliteDataObject
 
 
-@dataclasses.dataclass
-class UnifiedItem:
+@dataclasses.dataclass(init=False)
+class UnifiedItem(SqliteDataObject):
     source: str
     cipher_identifier: str
     name: str
 
     data: str
+    is_encrypted: bool
     note: str = None
 
-    created_at: float = None
-    updated_at: float = None
-
     @classmethod
-    def from_json(cls, **kwargs):
-        return UnifiedItem(**kwargs)
+    def primary_keys(cls) -> List[str]:
+        return ["source", "cipher_identifier", "name"]

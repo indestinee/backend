@@ -5,7 +5,7 @@ import re
 from io import BytesIO
 from typing import Tuple, List, Dict
 
-from src.config import FtpConfig
+from src.config import ServerConfig
 from src.data.cipher import Cipher
 from src.data.file_system_object import FileSystemObject
 from src.features.cipher_supplier import CipherSupplier
@@ -20,9 +20,9 @@ class FtpSupplier:
 
     def __init__(self, cipher_supplier: CipherSupplier):
         self.cipher_supplier = cipher_supplier
-        if not os.path.exists(FtpConfig.root_path):
-            os.makedirs(FtpConfig.root_path)
-        assert os.path.isdir(FtpConfig.root_path)
+        if not os.path.exists(ServerConfig.ftp_root_path):
+            os.makedirs(ServerConfig.ftp_root_path)
+        assert os.path.isdir(ServerConfig.ftp_root_path)
 
     def list_dir(self, dir_path: str) -> List[FileSystemObject]:
         dir_path, abs_path = self.get_abs_path(dir_path, check_is_dir=True)
@@ -43,10 +43,10 @@ class FtpSupplier:
         check_not_exists=False,
     ) -> Tuple[str, str]:
         path = os.path.normpath(path)
-        abs_path = os.path.abspath(os.path.join(FtpConfig.root_path, path))
+        abs_path = os.path.abspath(os.path.join(ServerConfig.ftp_root_path, path))
         if path.startswith("/") or self._invalid_path_pattern.search(path):
             raise CheckedException(f"invalid path: {path}")
-        if not abs_path.startswith(FtpConfig.root_path):
+        if not abs_path.startswith(ServerConfig.ftp_root_path):
             raise CheckedException(f"invalid path: {path}")
         if check_is_file and not os.path.isfile(abs_path):
             raise CheckedException(f"target is not a file: {path}")

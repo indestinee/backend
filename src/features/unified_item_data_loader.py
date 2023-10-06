@@ -19,10 +19,8 @@ class UnifiedItemDataLoader:
         name: str = None,
         key: str = None,
     ) -> List[UnifiedItem]:
-        items = (
-            self.dao.query_by_identifier(source, cipher_identifier)
-            if name is None
-            else self.dao.query_by_name(source, cipher_identifier, name)
+        items = self.dao.query_by_values(
+            source=source, cipher_identifier=cipher_identifier, name=name
         )
         if key is None:
             return items
@@ -31,7 +29,7 @@ class UnifiedItemDataLoader:
     def decrypt_item(self, item: UnifiedItem, key: str) -> UnifiedItem:
         try:
             data = self.cipher_supplier.decrypt(key, item.data)
-            new_item = UnifiedItem.from_json(**dataclasses.asdict(item))
+            new_item = UnifiedItem.loads(dataclasses.asdict(item))
             new_item.data = self.deserialize(data)
             return new_item
         except Exception as _:

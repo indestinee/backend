@@ -1,18 +1,12 @@
 import logging
-import os.path
+import os
 
 
-class DatabaseConfig:
-    db_path = os.path.abspath("/tmp/mountd/disk1_part1/backend/backend.db")
-    # db_path = os.path.abspath("/tmp/backend.db")
+class ServerConfig:
+    db_path = os.path.abspath(os.environ.get("DB_PATH", "/tmp/backend.db"))
+    ftp_root_path = os.path.abspath(os.environ.get("FTP_ROOT_PATH", "/tmp/ftp"))
 
-
-class FtpConfig:
-    root_path = os.path.abspath("/tmp/mountd/disk1_part1/Files")
-    # root_path = os.path.abspath("/tmp/ftp")
-
-
-class LoggingConfig:
+    # logging
     logging_level = logging.WARNING
     logging_file = None
 
