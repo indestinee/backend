@@ -23,16 +23,16 @@ def get_by_identifier():
 @unified_item_blueprint.route("/insert_or_replace", methods=["POST"])
 def insert_or_replace():
     items = [
-        UnifiedItem.from_json(**each) for each in flask.request.json.get("items", "[]")
+        UnifiedItem.loads(each) for each in flask.request.json.get("items", "[]")
     ]
     unified_item_dao.insert_or_replace(items)
     return create_success_response()
 
 
-@unified_item_blueprint.route("/delete_by_identifier_and_names", methods=["DELETE"])
+@unified_item_blueprint.route("/delete_by_identifier_and_name", methods=["DELETE"])
 def delete():
     cipher_identifier = flask.request.json.get("cipher_identifier", "")
     source = flask.request.json.get("source", "")
-    names = flask.request.json.get("names", None)
-    unified_item_dao.delete_by_identifier_and_names(source, cipher_identifier, names)
+    name = flask.request.json.get("name", None)
+    unified_item_dao.delete_by_values(source=source, cipher_identifier=cipher_identifier, name=name)
     return create_success_response()

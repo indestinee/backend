@@ -1,8 +1,10 @@
 import dataclasses
 
+from sqlite_dao_ext import SqliteDataObject
 
-@dataclasses.dataclass
-class UnifiedItem:
+
+@dataclasses.dataclass(init=False)
+class UnifiedItem(SqliteDataObject):
     source: str
     cipher_identifier: str
     name: str
@@ -10,10 +12,3 @@ class UnifiedItem:
     data: str
     is_encrypted: bool
     note: str = None
-
-    created_at: float = None
-    updated_at: float = None
-
-    @classmethod
-    def from_json(cls, **kwargs):
-        return UnifiedItem(**kwargs)
