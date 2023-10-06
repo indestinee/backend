@@ -13,6 +13,7 @@ def create_app():
     logger = get_logger("flask")
 
     @app.route("/")
+    @app.route("/flask")
     def home():
         return "Hello, World!"
 
