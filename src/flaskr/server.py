@@ -14,6 +14,7 @@ def create_app():
 
     @app.route("/")
     @app.route("/flask")
+    @app.route("/flask/")
     def home():
         return "Hello, World!"
 
