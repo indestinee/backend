@@ -73,7 +73,7 @@ class Client:
         password: Optional[str] = None,
     ) -> List[UnifiedItem]:
         return [
-            UnifiedItem(**item)
+            UnifiedItem.loads(item)
             for item in self.get(
                 "/flask/item/get",
                 source=source,
@@ -85,7 +85,7 @@ class Client:
 
     def item_insert(self, items: List[UnifiedItem]):
         return self.post(
-            "/flask/item/insert", items=[dataclasses.asdict(item) for item in items]
+            "/flask/item/insert", items=[item.dumps() for item in items]
         ).json()
 
     def item_delete(
