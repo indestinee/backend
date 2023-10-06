@@ -8,6 +8,7 @@ class UnifiedItem:
     name: str
 
     data: str
+    is_encrypted: bool
     note: str = None
 
     created_at: float = None
