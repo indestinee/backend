@@ -8,6 +8,7 @@ import requests
 from sqlite_dao_ext import SqliteDataObject
 
 
+# pylint: disable=R0801
 @dataclasses.dataclass(init=False)
 class UnifiedItem(SqliteDataObject):
     source: str
@@ -21,6 +22,9 @@ class UnifiedItem(SqliteDataObject):
     @classmethod
     def primary_keys(cls) -> List[str]:
         return ["source", "cipher_identifier", "name"]
+
+
+# pylint: enable=R0801
 
 
 class Client:
@@ -48,15 +52,17 @@ class Client:
         local_file_path: str = None,
     ):
         if file_data is not None:
-            fp = io.BytesIO(file_data)
+            stream = io.BytesIO(file_data)
         elif local_file_path is not None:
-            fp = open(local_file_path, "rb")
+            # pylint: disable=R1732
+            stream = open(local_file_path, "rb")
+            # pylint: enable=R1732
         else:
             raise RuntimeError("file_data and local_file_path are both none")
         return self.sess.post(
             self._build_url_path("/flask/ftp/upload"),
             data={"file_path": file_path, "override": override},
-            files=[("file", (os.path.basename(file_path), fp, "text/plain"))],
+            files=[("file", (os.path.basename(file_path), stream, "text/plain"))],
         ).json()
 
     def ftp_download(self, file_path: str, password: Optional[str] = None):

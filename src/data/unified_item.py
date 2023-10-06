@@ -1,7 +1,7 @@
 import dataclasses
+from typing import List
 
 from sqlite_dao_ext import SqliteDataObject
-from typing import List
 
 
 @dataclasses.dataclass(init=False)
