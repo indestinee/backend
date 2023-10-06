@@ -19,7 +19,9 @@ class UnifiedItemDataLoader:
         name: str = None,
         key: str = None,
     ) -> List[UnifiedItem]:
-        items = self.dao.query_by_values(source=source, cipher_identifier=cipher_identifier, name=name)
+        items = self.dao.query_by_values(
+            source=source, cipher_identifier=cipher_identifier, name=name
+        )
         if key is None:
             return items
         return list(map(self.decrypt_item, items, [key] * len(items)))

@@ -69,7 +69,7 @@ def create_folder():
 
 @ftp_blueprint.route("/upload", methods=["POST"])
 def upload():
-    override = flask.request.form.get("override", False)
+    override = flask.request.form.get("override", "False").lower() == "true"
     file_path = flask.request.form.get("file_path", None)
     if file_path is None:
         raise CheckedException("file_path is required")

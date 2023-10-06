@@ -8,7 +8,8 @@ from src.features.cipher_supplier import CipherSupplier
 from src.features.ftp_supplier import FtpSupplier
 from src.features.logging_supplier import get_logger
 
-sqlite_client = SqliteClient(ServerConfig.db_path)
+config = ServerConfig()
+sqlite_client = SqliteClient(config.db_path)
 cipher_supplier = CipherSupplier()
 unified_item_dao = UnifiedItemDao(sqlite_client, UnifiedItem)
 unified_item_data_loader = UnifiedItemDataLoader(unified_item_dao, cipher_supplier)
