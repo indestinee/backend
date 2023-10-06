@@ -2,13 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
-accompany/
 
 # C extensions
 *.so
 
-.DS_Store
-oneoff/
+.DS_Store/
 .idea/
 
 # Distribution / packaging
