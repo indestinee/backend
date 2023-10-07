@@ -5,7 +5,7 @@ from urllib.parse import unquote
 import flask
 from flask import Blueprint, send_file
 
-from src.features.exceptions import CheckedException
+from src.data.exceptions import CheckedException
 from src.module import ftp_supplier
 from src.utils.flask_utils import create_failure_response, create_success_response
 
@@ -41,7 +41,7 @@ def download():
 
 @ftp_blueprint.route("/delete", methods=["DELETE"])
 def delete():
-    path = flask.request.json.get("path", None)
+    path = str(flask.request.json["path"])
     if path is None:
         raise CheckedException("path is required")
     path, abs_path = ftp_supplier.get_abs_path(path, check_exists=True)
@@ -59,7 +59,7 @@ def delete():
 
 @ftp_blueprint.route("/create_folder", methods=["POST"])
 def create_folder():
-    dir_path = flask.request.json.get("dir_path", None)
+    dir_path = str(flask.request.json["dir_path"])
     if dir_path is None:
         raise CheckedException("dir_path is required")
     dir_path, abs_path = ftp_supplier.get_abs_path(dir_path, check_not_exists=True)
@@ -70,7 +70,7 @@ def create_folder():
 @ftp_blueprint.route("/upload", methods=["POST"])
 def upload():
     override = flask.request.form.get("override", "False").lower() == "true"
-    file_path = flask.request.form.get("file_path", None)
+    file_path = flask.request.form["file_path"]
     if file_path is None:
         raise CheckedException("file_path is required")
     file_path, abs_path = ftp_supplier.get_abs_path(file_path)
@@ -78,8 +78,8 @@ def upload():
         raise CheckedException("cannot override a directory")
     if os.path.exists(abs_path) and not override:
         raise CheckedException("file already exists")
-    file = flask.request.files.get("file", None)
-    if file is None:
+    file = flask.request.files["file"]
+    if not file:
         raise CheckedException("file is required")
     file.save(abs_path)
     return create_success_response()

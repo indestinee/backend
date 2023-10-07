@@ -1,8 +1,9 @@
 from flask import Flask
 from werkzeug.exceptions import HTTPException
 
-from src.features.exceptions import CheckedException
+from src.data.exceptions import CheckedException
 from src.features.logging_supplier import get_logger
+from src.flaskr.book_store import book_store_blueprint
 from src.flaskr.unified_item import unified_item_blueprint
 from src.flaskr.ftp import ftp_blueprint
 from src.utils.flask_utils import create_failure_response
@@ -30,4 +31,5 @@ def create_app():
 
     app.register_blueprint(ftp_blueprint)
     app.register_blueprint(unified_item_blueprint)
+    app.register_blueprint(book_store_blueprint)
     return app

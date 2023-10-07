@@ -2,7 +2,7 @@ import flask
 from flask import Blueprint
 
 from src.data.unified_item import UnifiedItem
-from src.module import unified_item_dao, unified_item_data_loader
+from src.module import unified_item_data_loader
 from src.utils.flask_utils import create_success_response
 
 unified_item_blueprint = Blueprint("item", __name__, url_prefix="/flask/item")
@@ -24,7 +24,7 @@ def get():
 @unified_item_blueprint.route("/insert", methods=["POST"])
 def insert():
     items = [UnifiedItem.loads(each) for each in flask.request.json.get("items", "[]")]
-    unified_item_dao.insert_or_replace(items)
+    unified_item_data_loader.unified_item_dao.insert_or_replace(items)
     return create_success_response()
 
 
@@ -34,7 +34,7 @@ def delete():
     # avoid leak of cipher identifier
     cipher_identifier = flask.request.json.get("cipher_identifier", "")
     name = flask.request.json.get("name", None)
-    unified_item_dao.delete_by_values(
+    unified_item_data_loader.unified_item_dao.delete_by_values(
         source=source, cipher_identifier=cipher_identifier, name=name
     )
     return create_success_response()

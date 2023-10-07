@@ -9,7 +9,7 @@ from src.config import ServerConfig
 from src.data.cipher import Cipher
 from src.data.file_system_object import FileSystemObject
 from src.features.cipher_supplier import CipherSupplier
-from src.features.exceptions import CheckedException
+from src.data.exceptions import CheckedException
 from src.features.logging_supplier import get_logger
 
 

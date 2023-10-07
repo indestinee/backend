@@ -1,16 +1,22 @@
 import dataclasses
 from typing import List
 
-from src.dao.unified_item_dao import UnifiedItemDao
+from sqlite_dao_ext import SqliteClient, SqliteDao
 from src.data.unified_item import UnifiedItem
 from src.features.cipher_supplier import CipherSupplier
-from src.features.exceptions import CheckedException
+from src.data.exceptions import CheckedException
 
 
 @dataclasses.dataclass
 class UnifiedItemDataLoader:
-    dao: UnifiedItemDao
+    unified_item_dao: SqliteDao[UnifiedItem]
+    sqlite_client: SqliteClient
     cipher_supplier: CipherSupplier
+
+    def __init__(self, sqlite_client: SqliteClient, cipher_supplier: CipherSupplier):
+        self.sqlite_client = sqlite_client
+        self.unified_item_dao = SqliteDao[UnifiedItem](sqlite_client, UnifiedItem)
+        self.cipher_supplier = cipher_supplier
 
     def query_by_identifier(
         self,
@@ -19,7 +25,7 @@ class UnifiedItemDataLoader:
         name: str = None,
         key: str = None,
     ) -> List[UnifiedItem]:
-        items = self.dao.query_by_values(
+        items = self.unified_item_dao.query_by_values(
             source=source, cipher_identifier=cipher_identifier, name=name
         )
         if key is None:
