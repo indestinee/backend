@@ -30,10 +30,11 @@ class BookStoreDataLoader:
             group_by=["book_source", "book_identifier"]
         )
         count_map = {self._join_key(item): item["count"] for item in count_list}
-
         return GetBooksResponse(
             [
-                book_store_service.Book.of(book, count_map.get(self._join_key(book), 0))
+                book_store_service.Book.from_db_book(
+                    book, count_map.get(self._join_key(book), 0)
+                )
                 for book in books
             ]
         )
@@ -48,27 +49,25 @@ class BookStoreDataLoader:
         books = self.book_dao.query_by_values(
             book_source=book_source, book_identifier=book_identifier
         )
-
         if len(books) != 1:
             raise CheckedException("no such book")
-
-        count = self.chapter_dao.count_by_values(
-            book_source=book_source, book_identifier=book_identifier
-        )
-        catalogue_items = [
-            CatalogueItem(**catalogue_item)
-            for catalogue_item in self.chapter_dao.query_fields_by_values(
-                fields=["title", "chapter_identifier"],
-                offset=offset,
-                limit=limit,
-                book_source=book_source,
-                book_identifier=book_identifier,
-            )
-        ]
-
         return GetCatalogueResponse(
-            book=book_store_service.Book.of(books[0], count),
-            catalogue_items=catalogue_items,
+            book=book_store_service.Book.from_db_book(
+                books[0],
+                self.chapter_dao.count_by_values(
+                    book_source=book_source, book_identifier=book_identifier
+                ),
+            ),
+            catalogue_items=[
+                CatalogueItem(**catalogue_item)
+                for catalogue_item in self.chapter_dao.query_fields_by_values(
+                    fields=["title", "chapter_identifier"],
+                    offset=offset,
+                    limit=limit,
+                    book_source=book_source,
+                    book_identifier=book_identifier,
+                )
+            ],
         )
 
     def get_chapter(
@@ -79,12 +78,9 @@ class BookStoreDataLoader:
             book_identifier=book_identifier,
             chapter_identifier=chapter_identifier,
         )
-
         if len(chapters) != 1:
             raise CheckedException("no such book")
-
-        chapter = chapters[0]
-        return chapter
+        return chapters[0]
 
     def _join_key(self, book: Union[Dict[str, Any], Book]):
         return self.CONNECTOR.join([book["book_source"], book["book_identifier"]])

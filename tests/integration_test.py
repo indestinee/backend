@@ -178,7 +178,7 @@ class IntegrationTest(unittest.TestCase):
         )
 
         self.assertTrue(
-            self.client.book_store_delete_books("test_source", f"test_identifier1")[
+            self.client.book_store_delete_books("test_source", "test_identifier1")[
                 "success"
             ]
         )

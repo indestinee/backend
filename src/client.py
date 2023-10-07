@@ -237,11 +237,11 @@ class Client:
     def get(self, url_path: str, **params):
         return self.sess.get(self._build_url_path(url_path), params=params)
 
-    def post(self, url_path: str, **json):
-        return self.sess.post(self._build_url_path(url_path), json=json)
+    def post(self, url_path: str, **data):
+        return self.sess.post(self._build_url_path(url_path), json=data)
 
-    def delete(self, url_path: str, **json):
-        return self.sess.delete(self._build_url_path(url_path), json=json)
+    def delete(self, url_path: str, **data):
+        return self.sess.delete(self._build_url_path(url_path), json=data)
 
     def _build_url_path(self, url_path: str):
         return self.url.rstrip("/") + "/" + url_path.lstrip("/")

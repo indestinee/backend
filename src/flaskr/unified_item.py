@@ -2,7 +2,7 @@ import flask
 from flask import Blueprint
 
 from src.data.unified_item import UnifiedItem
-from src.module import unified_item_data_loader, unified_item_data_loader
+from src.module import unified_item_data_loader
 from src.utils.flask_utils import create_success_response
 
 unified_item_blueprint = Blueprint("item", __name__, url_prefix="/flask/item")

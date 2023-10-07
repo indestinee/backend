@@ -20,7 +20,7 @@ class Book:
     count_chapters: int
 
     @classmethod
-    def of(cls, book: BookDb, count: int) -> "Book":
+    def from_db_book(cls, book: BookDb, count: int) -> "Book":
         return Book(
             book_source=book.book_source,
             book_identifier=book.book_identifier,

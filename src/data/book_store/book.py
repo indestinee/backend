@@ -1,6 +1,6 @@
 import dataclasses
-from sqlite_dao_ext import SqliteDataObject
 from typing import List
+from sqlite_dao_ext import SqliteDataObject
 
 
 @dataclasses.dataclass(init=False)
