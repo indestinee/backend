@@ -1,5 +1,5 @@
 Flask==2.3.2
 pycryptodome==3.19.0
 Requests==2.31.0
-sqlite_dao_ext==0.1.4
+sqlite_dao_ext==0.1.6
 Werkzeug==2.3.6
