@@ -28,7 +28,6 @@ class IntegrationTest(unittest.TestCase):
     def __del__(self):
         result = self.client.ftp_delete("test")
         logging.info("init delete result %s", result)
-        print("init delete result")
 
     def test_home(self):
         self.assertEqual(self.client.home(), "Hello, World!")
