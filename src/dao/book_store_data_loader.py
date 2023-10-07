@@ -58,7 +58,11 @@ class BookStoreDataLoader:
         catalogue_items = [
             CatalogueItem(**catalogue_item)
             for catalogue_item in self.chapter_dao.query_fields_by_values(
-                fields=["title", "chapter_identifier"], offset=offset, limit=limit
+                fields=["title", "chapter_identifier"],
+                offset=offset,
+                limit=limit,
+                book_source=book_source,
+                book_identifier=book_identifier,
             )
         ]
 

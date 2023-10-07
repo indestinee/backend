@@ -1,3 +1,5 @@
+import logging
+
 from sqlite_dao_ext import SqliteClient
 
 from src.config import ServerConfig
@@ -8,6 +10,9 @@ from src.features.logging_supplier import get_logger
 from src.dao.unified_item_data_loader import UnifiedItemDataLoader
 
 config = ServerConfig()
+logging.info("service config: %s", config)
+if config.db_path == ":memory":
+    logging.warning("sqlite client is running on memory!!")
 sqlite_client = SqliteClient(config.db_path)
 cipher_supplier = CipherSupplier()
 

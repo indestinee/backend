@@ -1,4 +1,3 @@
-import dataclasses
 from urllib.parse import unquote
 
 import flask
@@ -18,9 +17,7 @@ def get_books():
     limit = int(flask.request.args.get("limit", 100))
     offset = int(flask.request.args.get("offset", 0))
     return create_success_response(
-        **dataclasses.asdict(
-            book_store_data_loader.get_books(limit=limit, offset=offset)
-        )
+        response=book_store_data_loader.get_books(limit=limit, offset=offset)
     )
 
 
@@ -31,13 +28,11 @@ def get_catalogue():
     book_source = unquote(flask.request.args["book_source"] or "")
     book_identifier = unquote(flask.request.args["book_identifier"] or "")
     return create_success_response(
-        **dataclasses.asdict(
-            book_store_data_loader.get_catalogue(
-                book_source=book_source,
-                book_identifier=book_identifier,
-                limit=limit,
-                offset=offset,
-            )
+        response=book_store_data_loader.get_catalogue(
+            book_source=book_source,
+            book_identifier=book_identifier,
+            limit=limit,
+            offset=offset,
         )
     )
 
@@ -48,12 +43,10 @@ def get_chapter():
     book_identifier = unquote(flask.request.args["book_identifier"] or "")
     chapter_identifier = unquote(flask.request.args["chapter_identifier"] or "")
     return create_success_response(
-        **dataclasses.asdict(
-            book_store_data_loader.get_chapter(
-                book_source=book_source,
-                book_identifier=book_identifier,
-                chapter_identifier=chapter_identifier,
-            )
+        chapter=book_store_data_loader.get_chapter(
+            book_source=book_source,
+            book_identifier=book_identifier,
+            chapter_identifier=chapter_identifier,
         )
     )
 

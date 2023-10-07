@@ -3,7 +3,7 @@ import os
 
 
 class ServerConfig:
-    db_path = os.path.abspath(os.environ.get("DB_PATH", "/tmp/backend.db"))
+    db_path = os.environ.get("DB_PATH", ":memory:")
     ftp_root_path = os.path.abspath(os.environ.get("FTP_ROOT_PATH", "/tmp/ftp"))
 
     # logging
